@@ -1,5 +1,4 @@
-
-package com.example.appsprint0;
+package com.example.myapplication.logicaFake;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -75,7 +74,7 @@ public class PeticionarioREST extends AsyncTask<Void, Void, Boolean> {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("User-Agent", "Daniel");
             connection.setRequestMethod("POST");
-			connection.setRequestProperty( "Content-Type", "application/json" );
+            connection.setRequestProperty( "Content-Type", "application/json" );
             connection.setRequestMethod(this.elMetodo);
             //connection.setRequestProperty("Accept", "*/*);
 
