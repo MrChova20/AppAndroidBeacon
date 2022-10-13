@@ -4,7 +4,7 @@ package com.example.myapplication;
 import java.util.Arrays;
 
 // -----------------------------------------------------------------------------------
-// @author: Pablo Chova Aparisi
+// @author: Jordi Bataller i Mascarell
 // -----------------------------------------------------------------------------------
 public class TramalBeacon {
     private byte[] prefijo = null; // 9 bytes

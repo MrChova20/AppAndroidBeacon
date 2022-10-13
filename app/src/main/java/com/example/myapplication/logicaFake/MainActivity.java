@@ -20,7 +20,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -28,8 +27,6 @@ import com.example.myapplication.R;
 import com.example.myapplication.ServicioEscucharBeacons;
 import com.example.myapplication.TramalBeacon;
 import com.example.myapplication.Utilidades;
-
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -45,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     Logica laLogica = new Logica();//DISTINTOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 
 
-
     TextView txtLatitud;//DISTINTOOOOOOOOOOOOOOOOOOOOOOOOOOOO
     TextView txtLongitud;//DISTINTOOOOOOOOOOOOOOOOOOOOOOOOOOOO
     private LocationManager locManager;//DISTINTOOOOOOOOOOOOOOOOOOOOOOOOOOOO
@@ -57,11 +53,7 @@ public class MainActivity extends AppCompatActivity {
     double major;//DISTINTOOOOOOOOOOOOOOOOOOOOOOOOOOOO
     double minor;//DISTINTOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 
-    private TextView elTexto;
-    private Button elBotonEnviar;
-    private JSONObject datos_muestra = new JSONObject();
-    private String string_json;
-    private  Medicion dato1;
+
     // --------------------------------------------------------------
     // --------------------------------------------------------------
     private static final String ETIQUETA_LOG = ">>>>";
@@ -73,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     private BluetoothLeScanner elEscanner;
 
     private ScanCallback callbackDelEscaneo = null;
+
     // --------------------------------------------------------------
     /*
      * Método para buscar todos los dispositivos Bluetooth
@@ -113,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         Log.d(ETIQUETA_LOG, " buscarTodosLosDispositivosBTL(): empezamos a escanear ");
+
         this.elEscanner.startScan(this.callbackDelEscaneo);
 
     } // ()
@@ -530,56 +524,10 @@ public class MainActivity extends AppCompatActivity {
 
         inicializarBlueTooth();
 
-
-
         Log.d(ETIQUETA_LOG, " onCreate(): termina ");
-        try{
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                datos_muestra.put("id", 852 );
-                datos_muestra.put("value", minor);
-                datos_muestra.put("sensorId","e55d93a0-ed7f-4287-8263-3398fdaf4415");
-                Log.d("debug", String.valueOf(datos_muestra));
-                Log.d("numeroIncognita", String.valueOf(datos_muestra));
-            }
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        this.elTexto = (TextView) findViewById(R.id.muestra_txt);
-        this.elBotonEnviar = (Button) findViewById(R.id.boton_recoger_muestra);
-        elBotonEnviar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                //DO SOMETHING! {RUN SOME FUNCTION ... DO CHECKS... ETC}
-                boton_enviar_muestra(v);
-            }
-        });
+
     } // onCreate()
-    public void boton_enviar_muestra(View quien){
 
-        Log.d("clienterestandroid", "boton_enviar_pulsado");
-        try{
-            Log.d("clienterestandroid", String.valueOf(datos_muestra));
-            string_json = String.valueOf(datos_muestra);
-        }
-        catch (Error e)
-        {
-
-        }
-
-        //Prueba POST /alta
-        PeticionarioREST elPeticionario = new PeticionarioREST();
-        elPeticionario.hacerPeticionREST("POST",  "http://192.168.0.15:3000/measures", string_json,
-                new PeticionarioREST.RespuestaREST () {
-                    @Override
-                    public void callback(int codigo, String cuerpo) {
-                        Log.d("clienterestandroid", "POST /alta completado");
-                    }
-                }
-        );
-
-    }
     // --------------------------------------------------------------
     /*
      * Método para pedir permisos

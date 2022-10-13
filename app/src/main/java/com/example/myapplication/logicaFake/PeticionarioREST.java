@@ -1,20 +1,15 @@
 package com.example.myapplication.logicaFake;
 
+import android.os.AsyncTask;
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import android.os.AsyncTask;
-import android.util.Log;
-
-import org.json.JSONObject;
-
-import javax.net.ssl.HttpsURLConnection;
 
 // ------------------------------------------------------------------------
 // ------------------------------------------------------------------------
@@ -33,12 +28,21 @@ public class PeticionarioREST extends AsyncTask<Void, Void, Boolean> {
     private String elCuerpo = null;
     private RespuestaREST laRespuesta;
 
-
     private int codigoRespuesta;
     private String cuerpoRespuesta = "";
 
-    // --------------------------------------------------------------------
-    // --------------------------------------------------------------------
+    // --------------------------------------------------------------
+    /*
+     * Método para hacer la petición REST
+     *
+     * @param {String} metodo. Le pasamos el metodo
+     * @param {String} urlDestino. Le pasamos la url de destino
+     * @param {String} cuerpo. Le pasamos el cuerpo
+     * @param RespuestaREST laRespuesta. Le pasamos la respuesta de la interfaz de RespuestaREST
+     *
+     * @return No devuelve nada
+     */
+    // --------------------------------------------------------------
     public void hacerPeticionREST (String metodo, String urlDestino, String cuerpo, RespuestaREST  laRespuesta) {
         this.elMetodo = metodo;
         this.urlDestino = urlDestino;
@@ -48,14 +52,24 @@ public class PeticionarioREST extends AsyncTask<Void, Void, Boolean> {
         this.execute(); // otro thread ejecutará doInBackground()
     }
 
-    // --------------------------------------------------------------------
-    // --------------------------------------------------------------------
+    /*
+     * Método para PeticionarioREST
+     *
+     * @param No le pasamos nada
+     *
+     * @return No devuelve nada
+     */
     public PeticionarioREST() {
         Log.d("clienterestandroid", "constructor()");
     }
 
-    // --------------------------------------------------------------------
-    // --------------------------------------------------------------------
+    /*
+     * Método para hacerlo en el Background
+     *
+     * @param {Void}
+     *
+     * @return bool: ToF
+     */
     @Override
     protected Boolean doInBackground(Void... params) {
         Log.d("clienterestandroid", "doInBackground()");
@@ -72,11 +86,9 @@ public class PeticionarioREST extends AsyncTask<Void, Void, Boolean> {
             URL url = new URL(urlDestino);
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestProperty("User-Agent", "Daniel");
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty( "Content-Type", "application/json" );
+            connection.setRequestProperty( "Content-Type", "application/json; charset-utf-8" );
             connection.setRequestMethod(this.elMetodo);
-            //connection.setRequestProperty("Accept", "*/*);
+            // connection.setRequestProperty("Accept", "*/*);
 
             // connection.setUseCaches(false);
             connection.setDoInput(true);
@@ -84,16 +96,18 @@ public class PeticionarioREST extends AsyncTask<Void, Void, Boolean> {
             if ( ! this.elMetodo.equals("GET") && this.elCuerpo != null ) {
                 Log.d("clienterestandroid", "doInBackground(): no es get, pongo cuerpo");
                 connection.setDoOutput(true);
-                // si no es GET, pongo el cuerpo que me den en la peticion
-                connection.getOutputStream().write(this.elCuerpo.getBytes());
-                connection.getOutputStream().flush();
-                connection.getOutputStream().close();
+                // si no es GET, pongo el cuerpo que me den en la peticin
+                DataOutputStream dos = new DataOutputStream (connection.getOutputStream());
+                dos.writeBytes(this.elCuerpo);
+                dos.flush();
+                dos.close();
             }
 
             // ya he enviado la peticin
             Log.d("clienterestandroid", "doInBackground(): peticin enviada ");
 
             // ahora obtengo la respuesta
+
             int rc = connection.getResponseCode();
             String rm = connection.getResponseMessage();
             String respuesta = "" + rc + " : " + rm;
@@ -133,8 +147,13 @@ public class PeticionarioREST extends AsyncTask<Void, Void, Boolean> {
         return false; // doInBackground() NO termina bien
     } // ()
 
-    // --------------------------------------------------------------------
-    // --------------------------------------------------------------------
+    /*
+     * Método para el post ejecutado
+     *
+     * @param {Boolean} comoFue
+     *
+     * @return No devuelve nada
+     */
     protected void onPostExecute(Boolean comoFue) {
         // llamado tras doInBackground()
         Log.d("clienterestandroid", "onPostExecute() comoFue = " + comoFue);
@@ -142,5 +161,4 @@ public class PeticionarioREST extends AsyncTask<Void, Void, Boolean> {
     }
 
 } // class
-
 

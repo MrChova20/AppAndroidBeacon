@@ -1,7 +1,7 @@
 package com.example.myapplication;
 
 // -----------------------------------------------------------------------------------
-// @author: Pablo Chova Aparisi
+// @author: Jordi Bataller i Mascarel
 
 import java.math.BigInteger;
 import java.nio.ByteBuffer;

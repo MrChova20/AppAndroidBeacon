@@ -29,26 +29,40 @@
         app:layout_constraintStart_toStartOf="@+id/botonBuscarDispositivosBTLE"
         app:layout_constraintTop_toBottomOf="@+id/botonBuscarDispositivosBTLE" />
 
-    <TextView
-        android:id="@+id/muestra_txt"
+    <Button
+        android:id="@+id/botonBuscarNuestroDispositivoBTLE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="8dp"
+        android:onClick="botonBuscarNuestroDispositivoBTLEPulsado"
+        android:text="Buscar nuestro dispositivo  BTLE"
+        app:layout_constraintEnd_toEndOf="@+id/botonDetenerBusquedaDispositivosBTLE"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/botonDetenerBusquedaDispositivosBTLE"
+        app:layout_constraintTop_toBottomOf="@+id/botonDetenerBusquedaDispositivosBTLE" />
 
     <Button
-        android:id="@+id/boton_recoger_muestra"
+        android:id="@+id/boton_arrancar_servicio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:onClick="boton_enviar_muestra"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/muestra_txt"
-        app:layout_constraintVertical_bias="0.0" />
+        android:layout_marginTop="12dp"
+        android:onClick="botonArrancarServicioPulsado"
+        android:text="Arrancar servicio"
+        app:layout_constraintEnd_toEndOf="@+id/botonBuscarNuestroDispositivoBTLE"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="@+id/botonBuscarNuestroDispositivoBTLE"
+        app:layout_constraintTop_toBottomOf="@+id/botonBuscarNuestroDispositivoBTLE" />
+
+    <Button
+        android:id="@+id/boton_detener_servicio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:onClick="botonDetenerServicioPulsado"
+        android:text="Detener servicio"
+        app:layout_constraintEnd_toEndOf="@+id/boton_arrancar_servicio"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="@+id/boton_arrancar_servicio"
+        app:layout_constraintTop_toBottomOf="@+id/boton_arrancar_servicio" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
